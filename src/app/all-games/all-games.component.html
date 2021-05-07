@@ -1,10 +1,10 @@
 <h1>Games</h1>
 <div *ngIf="isInitialized">
+    <p>Selected Game: {{getSelectedGameId()}}</p>
     <div class="container">
         <div class="list-group">
             <ng-container *ngFor="let game of index | keyvalue">
-                <a [href]="'games/'+game.key"
-                class="list-group-item list-group-item-action">{{game.value.name}}</a>
+                <a [style.backgroundColor]="game.key==getSelectedGameId()?'#ffffe0':'white'" (click)="onClickGame(game.key)" class="list-group-item list-group-item-action">{{game.value.name}}</a><!--[href]="'games/'+game.key"-->
             </ng-container>
         </div>
     </div>

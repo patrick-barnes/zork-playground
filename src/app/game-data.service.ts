@@ -26,6 +26,14 @@ export class GameDataService {
     return this.getDataBaseUrl() + "/" + this.selectedGameId;
   }
 
+  public selectGame(gameId) {
+    this.selectedGameId = gameId;
+  }
+
+  public getSelectedGameId() {
+    return this.selectedGameId;
+  }
+
   public getIndex() {
     if (this.indexCached != null) {
       console.log("getIndex() returning already-cached:", this.indexCached);

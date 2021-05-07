@@ -20,4 +20,12 @@ export class AllGamesComponent implements OnInit {
     });
   }
 
+  onClickGame(gameId: string) {
+    this.gameDataService.selectGame(gameId);
+  }
+
+  getSelectedGameId() {
+    return this.gameDataService.getSelectedGameId();
+  }
+
 }

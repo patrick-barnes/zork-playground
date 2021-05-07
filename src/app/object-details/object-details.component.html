@@ -1,7 +1,16 @@
 <ng-container *ngIf="isInitialized">
     <h1>{{o.Name}}</h1>
-    <ul>
-        <li *ngFor="let p of o.Properties | keyvalue">{{p.key}} = {{stringify(p.value)}}</li>
-    </ul>
-    <p>Zil: {{o.Zil}}</p>
+    <table class="table table-striped table-hover">
+        <tbody>
+            <ng-container *ngFor="let p of o.Properties | keyvalue">
+                <tr>
+                    <td style="width:8em;"><b>{{p.key == '#IN' ? 'IN (Location)' : p.key}}</b></td>
+                    <td>
+                        <span *ngIf="p.key=='#IN'" class="ps-3"><mark><a [href]="'rooms/'+o.Properties['#IN']" class="text-reset text-decoration-none">{{o.Properties['#IN']}}</a></mark></span>
+                        <app-zil-object *ngIf="p.key!='#IN'" [o]="p.value"></app-zil-object>
+                    </td><!--{{p.value}}-->
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
 </ng-container>
