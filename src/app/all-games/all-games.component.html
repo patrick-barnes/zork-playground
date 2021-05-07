@@ -1,0 +1,11 @@
+<h1>Objects</h1>
+<div *ngIf="isInitialized">
+    <div class="container">
+        <div class="list-group">
+            <ng-container *ngFor="let game of index | keyvalue">
+                <a [href]="'games/'+game.key"
+                class="list-group-item list-group-item-action">{{game.value.name}}</a>
+            </ng-container>
+        </div>
+    </div>
+</div>

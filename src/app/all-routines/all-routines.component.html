@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="alert alert-warning" role="alert">
+        This page is under construction!
+    </div>
+    <h1>Routines</h1>
+    <div *ngIf="isInitialized">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Source</th>
+                    <th>Name</th>
+                    <th>ArgSpec</th>
+                    <th>First Line</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let o of allRoutines">
+                    <td><i>{{o.Source}}</i></td>
+                    <td><b>{{o.Name}}</b></td>
+                    <td style="max-width:300px; white-space:nowrap; overflow:hidden; text-overflow: ellipsis;">{{o.ArgSpec}}</td>
+                    <td style="max-width:300px; white-space:nowrap; overflow:hidden; text-overflow: ellipsis;">{{o.Body[0]?.Zil}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

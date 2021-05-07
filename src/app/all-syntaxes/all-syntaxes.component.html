@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="alert alert-warning" role="alert">
+        This page is under construction!
+    </div>
+    <h1>Syntaxes</h1>
+    <div *ngIf="isInitialized">
+        <table class="table table-hover table-striped" style="width:auto">
+            <thead>
+                <tr>
+                    <th>Syntax</th>
+                    <th>Action</th>
+                    <th>Preaction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let o of allSyntaxes">
+                    <td>
+                        {{o.Verb.toLowerCase()}} {{o.Preposition1?.toLowerCase()}} <i>{{o.Object1?.toLowerCase()}}</i> {{o.Preposition2?.toLowerCase()}} <i>{{o.Object2?.toLowerCase()}}</i>
+                    </td>
+                    <td>{{o.Action}}</td>
+                    <td>{{o.Preaction}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

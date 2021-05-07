@@ -1,0 +1,7 @@
+<ng-container *ngIf="isInitialized">
+    <h1>{{o.Name}}</h1>
+    <ul>
+        <li *ngFor="let p of o.Properties | keyvalue">{{p.key}} = {{stringify(p.value)}}</li>
+    </ul>
+    <p>Zil: {{o.Zil}}</p>
+</ng-container>

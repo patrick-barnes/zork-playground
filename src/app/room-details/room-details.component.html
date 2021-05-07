@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="alert alert-warning" role="alert">
+        This page is under construction!
+    </div>
+    <ng-container *ngIf="isInitialized">
+        <h1>{{r.Name}}</h1>
+        <table class="table">
+            <ng-container *ngFor="let p of r.Properties | keyvalue">
+                <tr *ngIf="!shouldIgnoreProperty(p.key)">
+                    <td><b>{{p.key}}</b></td>
+                    <td *ngIf="p.key=='ACTION'">{{p.value[0].Atom}}</td>
+                    <td *ngIf="p.key!='ACTION'">{{stringify(p.value)}}</td>
+                </tr>
+            </ng-container>
+        </table>
+        <ul>
+        </ul>
+        <h2>Exits</h2>
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>Direction</th>
+                <th>Type</th>
+                <th>Control</th>
+                <th>To Room</th>
+                <th>Denied Message</th>
+            </tr>
+            <tr *ngFor="let p of r.Exits | keyvalue">
+                <td>{{p.key}}</td>
+                <td>{{getFriendlyExitType(p.value.TYPE)}}</td>
+                <td>{{p.value.DOOR || p.value.COND || p.value.PER}}</td>
+                <td><a  *ngIf="p.value.TO" [href]="'rooms/'+p.value.TO">{{p.value.TO}}</a></td>
+                <td>{{p.value.MESSAGE || p.value.ELSE}}</td>
+            </tr>
+        </table>
+        <h2>ZIL Code</h2>
+        <p>{{r.Zil}}</p>
+    </ng-container>
+</div>
