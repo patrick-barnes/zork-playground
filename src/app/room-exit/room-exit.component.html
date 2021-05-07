@@ -1,0 +1,61 @@
+<div [style.backgroundColor]="bgColor" [style.border]="'solid ' + borderColor + ' 2px'" style="border-radius:8px; margin:0px; padding:0px; width:100%; height:100%">
+    <div style="color:#c0c0c0; margin: 1px; padding:1px; background-color:inherit; border-radius:8px; font-size:smaller">
+        {{dirLabel}}
+    </div>
+    <ng-container *ngIf="room == null">
+        <div>"You can't go that way."</div>
+    </ng-container>
+    <ng-container *ngIf="room != null">
+        <ng-container *ngIf="dir == 'HERE'">
+            <div style="background-color:inherit; border-radius:4px;">
+                <span style="color:saddlebrown; font-weight:bold">HERE</span>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="dir != 'HERE'">
+            <ng-container *ngIf="exit == null">
+                <div style="margin:2px; padding:2px; background-color:inherit; color:rgba(139,69,19,0.25);">"You can't go that way."</div>
+            </ng-container>
+            <ng-container *ngIf="exit != null">
+                <ng-container *ngIf="exit.TYPE == 'UEXIT'">
+                    <div style="border-radius:4px;">
+                        <a [href]="'rooms/'+exit.TO" class="text-reset text-decoration-none"><span style="color:saddlebrown; font-weight:bold">{{exit.TO}}</span></a>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="exit.TYPE == 'CEXIT'">
+                    <div style="border-radius:4px;">
+                        <a [href]="'rooms/'+exit.TO" class="text-reset text-decoration-none"><span style="color:saddlebrown; font-weight:bold">{{exit.TO}}</span></a>
+                        <div style="margin:2px; border-radius:4px;">
+                            if 
+                            <!--TODO:change outer span below to a link to a global variable-->
+                            <span class="text-reset text-decoration-none"><span style="color:saddlebrown; font-weight:bold">{{exit.COND}}</span></span>,
+                            else
+                            <div *ngIf="exit.ELSE" style="margin:2px; padding:2px; background-color:inherit; color:rgba(139,69,19,0.75);">"{{exit.ELSE}}"</div>
+                            <div *ngIf="!exit.ELSE" style="margin:2px; padding:2px; background-color:inherit; color:rgba(139,69,19,0.25);">"You can't go that way."</div>
+                        </div>
+                        </div>
+                </ng-container>
+                <ng-container *ngIf="exit.TYPE == 'DEXIT'">
+                    <div style="border-radius:4px;">
+                        <a [href]="'rooms/'+exit.TO" class="text-reset text-decoration-none"><span style="color:saddlebrown; font-weight:bold">{{exit.TO}}</span></a>
+                        <div style="margin:2px; border-radius:4px;">
+                            if
+                            <a [href]="'objects/'+exit.DOOR" class="text-reset text-decoration-none"><span style="color:saddlebrown; font-weight:bold">{{exit.DOOR}}</span></a>
+                            is open
+                        </div>
+                        </div>
+                </ng-container>
+                <ng-container *ngIf="exit.TYPE == 'FEXIT'">
+                    <div style="border-radius:4px;">
+                        <div style="margin:2px; border-radius:4px;">
+                            per
+                            <a [href]="'routines/'+exit.PER" class="text-reset text-decoration-none"><span style="color:saddlebrown; font-weight:bold">{{exit.PER}}</span></a>
+                        </div>
+                        </div>
+                </ng-container>
+                <ng-container *ngIf="exit.TYPE == 'NEXIT'">
+                    <div style="padding:8px; color:rgba(139,69,19,0.50)">{{exit.MESSAGE}}"</div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</div>

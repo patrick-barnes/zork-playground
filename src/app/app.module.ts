@@ -19,6 +19,7 @@ import { SyntaxDetailsComponent } from './syntax-details/syntax-details.componen
 import { ZilFormComponent } from './zil-form/zil-form.component';
 import { ZilObjectComponent } from './zil-object/zil-object.component';
 import { ZilArrayComponent } from './zil-array/zil-array.component';
+import { RoomExitComponent } from './room-exit/room-exit.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -51,7 +52,8 @@ const routes: Routes = [
     SyntaxDetailsComponent,
     ZilFormComponent,
     ZilObjectComponent,
-    ZilArrayComponent
+    ZilArrayComponent,
+    RoomExitComponent
   ],
   imports: [
     BrowserModule,
