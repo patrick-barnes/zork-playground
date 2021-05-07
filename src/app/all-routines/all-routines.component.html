@@ -16,7 +16,7 @@
             <tbody>
                 <tr *ngFor="let o of allRoutines">
                     <td><i>{{o.Source}}</i></td>
-                    <td><b>{{o.Name}}</b></td>
+                    <td><a [href]="'routines/'+encodeURIComponent(o.Name)" class="text-reset text-decoration-none"><b>{{o.Name}}</b></a></td>
                     <td style="max-width:300px; white-space:nowrap; overflow:hidden; text-overflow: ellipsis;">{{o.ArgSpec}}</td>
                     <td style="max-width:300px; white-space:nowrap; overflow:hidden; text-overflow: ellipsis;">{{o.Body[0]?.Zil}}</td>
                 </tr>

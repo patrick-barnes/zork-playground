@@ -10,6 +10,7 @@ export class AllRoutinesComponent implements OnInit {
 
   public isInitialized: boolean = false;
   public allRoutines: any[] = null;
+  public encodeURIComponent = encodeURIComponent;
 
   constructor(private gameDataService: GameDataService) { }
 

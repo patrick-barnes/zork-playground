@@ -16,20 +16,22 @@
             <ng-container *ngFor="let r of allRooms">
                 <div class="col">
                     <div class="card shadow-sm h-100" style="color:saddlebrown;">
-                        <!--<h5 class="card-header">{{o.Name}}</h5>-->
-                        <div class="card-img-top" style="width:100%; height:225px; background-image: url(/assets/images/parchment3.jpg); background-color:tan;" role="div">
-                            <div class="p-3" style="height: 225px; overflow-y: hidden; font-family: 'Crimson Text', serif; color:saddlebrown;">
-                                <div style="font-size: 24pt;">{{r.Properties.DESC}}</div>
-                                <div style="font-size: 16pt;">{{r.Properties.FDESC || r.Properties.LDESC || "(described by " + r.Properties.ACTION[0].Atom + ")" }}</div>
+                        <a [href]="'rooms/'+r.Name" class="text-reset text-decoration-none">
+                            <!--<h5 class="card-header">{{o.Name}}</h5>-->
+                            <div class="card-img-top" style="width:100%; height:225px; background-image: url(/assets/images/parchment3.jpg); background-color:tan;" role="div">
+                                <div class="p-3" style="height: 225px; overflow-y: hidden; font-family: 'Crimson Text', serif; color:saddlebrown;">
+                                    <div style="font-size: 24pt;">{{r.Properties.DESC}}</div>
+                                    <div style="font-size: 16pt;">{{r.Properties.FDESC || r.Properties.LDESC || "(described by " + r.Properties.ACTION[0].Atom + ")" }}</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{r.Name}}</h5>
-                            <div class="card-text">
-                                <div>{{r.Properties.DESC}}</div>
-                                <!--<div style="width:100%; text-align:right; font-size:smaller;">To do</div>-->
+                            <div class="card-body">
+                                <h5 class="card-title">{{r.Name}}</h5>
+                                <div class="card-text">
+                                    <div>{{r.Properties.DESC}}</div>
+                                    <!--<div style="width:100%; text-align:right; font-size:smaller;">To do</div>-->
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </ng-container>

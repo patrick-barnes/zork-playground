@@ -17,6 +17,15 @@ export class GameDataService {
 
   constructor(private http: HttpClient) { }
 
+  public getDataBaseUrl() {
+    return "assets/zil-to-json/data";
+  }
+
+  public getGameBaseUrl() {
+    // Example: "assets/zil-to-json/data/zork1/"
+    return this.getDataBaseUrl() + "/" + this.selectedGameId;
+  }
+
   public getIndex() {
     if (this.indexCached != null) {
       console.log("getIndex() returning already-cached:", this.indexCached);
@@ -24,7 +33,7 @@ export class GameDataService {
     } else {
       console.log("getIndex() not-yet-cached, fetching...");
       return this.http
-        .get("/assets/zil-to-json/data/index.json")
+        .get(this.getDataBaseUrl() + "/index.json")
         .pipe(
           map((res: any) => {
             this.indexCached = res;
@@ -42,7 +51,7 @@ export class GameDataService {
     } else {
       console.log("getAllObjects() not-yet-cached, fetching...");
       return this.http
-        .get("/assets/zil-to-json/data/" + this.selectedGameId + "/objects.json")
+        .get(this.getGameBaseUrl() + "/objects.json")
         .pipe(
           map((res: any) => {
             this.allObjectsCached = res.sort((o1, o2) => { return o1.Name < o2.Name ? -1 : 1 });
@@ -60,7 +69,7 @@ export class GameDataService {
     } else {
       console.log("getAllRooms() not-yet-cached, fetching...");
       return this.http
-        .get("/assets/zil-to-json/data/" + this.selectedGameId + "/rooms.json")
+        .get(this.getGameBaseUrl() + "/rooms.json")
         .pipe(
           map((res: any) => {
             this.allRoomsCached = res.sort((o1, o2) => { return o1.Name < o2.Name ? -1 : 1 });
@@ -78,7 +87,7 @@ export class GameDataService {
     } else {
       console.log("getAllRoutines() not-yet-cached, fetching...");
       return this.http
-        .get("/assets/zil-to-json/data/" + this.selectedGameId + "/routines.json")
+        .get(this.getGameBaseUrl() + "/routines.json")
         .pipe(
           map((res: any) => {
             this.allRoutinesCached = res.sort((o1, o2) => { return o1.Name < o2.Name ? -1 : 1 });
@@ -96,7 +105,7 @@ export class GameDataService {
     } else {
       console.log("getAllSyntaxes() not-yet-cached, fetching...");
       return this.http
-        .get("/assets/zil-to-json/data/" + this.selectedGameId + "/syntaxes.json")
+        .get(this.getGameBaseUrl() + "/syntaxes.json")
         .pipe(
           map((res: any) => {
             this.allSyntaxesCached = res.sort((o1, o2) => { return o1.Syntax < o2.Syntax ? -1 : 1 });
