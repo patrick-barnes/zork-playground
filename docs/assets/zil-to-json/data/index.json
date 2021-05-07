@@ -1,0 +1,23 @@
+{
+    "zork1": {
+        "name": "ZORK I: The Great Underground Empire"
+    },
+    "zork2": {
+        "name": "ZORK II: The Wizard of Frobozz"
+    },
+    "zork3": {
+        "name": "ZORK III: The Dungeon Master"
+    },
+    "enchanter": {
+        "name": "ENCHANTER: a fantasy story"
+    },
+    "sorcerer": {
+        "name": "SORCERER: a fantasy story"
+    },
+    "spellbreaker": {
+        "name": "SPELLBREAKER: a fantasy story"
+    },
+    "wishbringer": {
+        "name": "WISHBRINGER: The Magick Stone of Dreams"
+    }
+}
