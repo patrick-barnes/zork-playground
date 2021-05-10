@@ -20,6 +20,7 @@ import { ZilFormComponent } from './zil-form/zil-form.component';
 import { ZilObjectComponent } from './zil-object/zil-object.component';
 import { ZilArrayComponent } from './zil-array/zil-array.component';
 import { RoomExitComponent } from './room-exit/room-exit.component';
+import { LinkableZilAtomComponent } from './linkable-zil-atom/linkable-zil-atom.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -53,7 +54,8 @@ const routes: Routes = [
     ZilFormComponent,
     ZilObjectComponent,
     ZilArrayComponent,
-    RoomExitComponent
+    RoomExitComponent,
+    LinkableZilAtomComponent
   ],
   imports: [
     BrowserModule,
