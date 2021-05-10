@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { map, catchError, retry } from 'rxjs/operators';
+import { GameDataReceiver } from './game-data-receiver';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class GameDataService {
   private allRoomsCached: any[] = null;
   private allRoutinesCached: any[] = null;
   private allSyntaxesCached: any[] = null;
+  private allGameData: any = null;
 
   constructor(private http: HttpClient) { }
 
@@ -52,6 +54,90 @@ export class GameDataService {
     }
   }
 
+  public getAllGameData(receiver: GameDataReceiver) {
+    this.getAllObjects().subscribe(allObjects => {
+      this.getAllRooms().subscribe(allRooms => {
+        this.getAllRoutines().subscribe(allRoutines => {
+          this.getAllSyntaxes().subscribe(allSyntaxes => {
+            this.allGameData = {
+              allObjects: allObjects,
+              allRooms: allRooms,
+              allRoutines: allRoutines,
+              allSyntaxes: allSyntaxes
+            };
+            this.analyzeGameData();
+            receiver.receiveGameData(this.allGameData);
+          })
+        })
+      })
+    });
+  }
+
+  public analyzeGameData() {
+    this.allGameData["metadata"] = {};
+    var metadata = this.allGameData["metadata"];
+    for (let o of this.allGameData.allObjects) {
+      if (metadata[o.Name]) { console.warn("WARN: Object name " + o.Name + " conflicts and overrides other entity:", metadata[o.Name]); }
+      metadata[o.Name] = {"name": o.Name, "type": "OBJECT"};
+    }
+    for (let o of this.allGameData.allRooms) {
+      if (metadata[o.Name]) { console.warn("WARN: Room name " + o.Name + " conflicts and overrides other entity:", metadata[o.Name]); }
+      metadata[o.Name] = {"name": o.Name, "type": "ROOM"};
+    }
+    for (let o of this.allGameData.allRoutines) {
+      if (metadata[o.Name]) { console.warn("WARN: Routine name " + o.Name + " conflicts and overrides other entity:", metadata[o.Name]); }
+      metadata[o.Name] = {
+        "name": o.Name,
+        "type": "ROUTINE",
+        "isActionForObjects": [],
+        "isActionForRooms": [],
+        "isPreactionForSyntaxes": [],
+        "isActionForSyntaxes": []
+      };
+    }
+    // Mark routines that are room action functions
+    for (let o of this.allGameData.allRooms) {
+      if (o.Properties["ACTION"]) {
+        let actionFunctionName = o.Properties["ACTION"][0].Atom;
+        if (actionFunctionName) {
+          let meta = metadata[actionFunctionName];
+          meta["isActionForRooms"].push(o.Name);
+        }
+      }
+    }
+    // Mark routines that are object action functions
+    for (let o of this.allGameData.allObjects) {
+      if (o.Properties["ACTION"]) {
+        let actionFunctionName = o.Properties["ACTION"][0].Atom;
+        if (actionFunctionName) {
+          let meta = metadata[actionFunctionName];
+          meta["isActionForObjects"].push(o.Name);
+        }
+      }
+    }
+    // Mark routines that are syntax preaction functions
+    for (let syntax of this.allGameData.allSyntaxes) {
+      let actionFunctionName = syntax["Preaction"];
+      if (actionFunctionName) {
+        let meta = metadata[actionFunctionName];
+        meta["isPreactionForSyntaxes"].push(syntax);
+        console.log("meta:", meta);
+      }
+    }
+    // Mark routines that are syntax action functions
+    for (let syntax of this.allGameData.allSyntaxes) {
+      let actionFunctionName = syntax["Action"];
+      if (actionFunctionName) {
+        let meta = metadata[actionFunctionName];
+        meta["isActionForSyntaxes"].push(syntax);
+      }
+    }
+  }
+
+  // public findRoutineWithName(name) {
+
+  // }
+
   public getAllObjects() {
     if (this.allObjectsCached != null) {
       console.log("getAllObjects() returning already-cached:", this.allObjectsCached);
@@ -88,7 +174,7 @@ export class GameDataService {
     }
   }
 
-  public getAllRoutines() {
+  public getAllRoutines(): Observable<any[]> {
     if (this.allRoutinesCached != null) {
       console.log("getAllRoutines() returning already-cached:", this.allRoutinesCached);
       return of(this.allRoutinesCached);

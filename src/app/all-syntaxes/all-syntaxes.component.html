@@ -14,7 +14,7 @@
                     <td>
                         {{o.Verb.toLowerCase()}} {{o.Preposition1?.toLowerCase()}} <i>{{o.Object1?.toLowerCase()}}</i> {{o.Preposition2?.toLowerCase()}} <i>{{o.Object2?.toLowerCase()}}</i>
                     </td>
-                    <td>{{o.Action}}</td>
+                    <td><a [href]="'routines/'+o.Action" class="text-reset text-decoration-none">{{o.Action}}</a></td>
                     <td>{{o.Preaction}}</td>
                 </tr>
             </tbody>

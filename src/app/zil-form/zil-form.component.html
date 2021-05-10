@@ -1,6 +1,6 @@
-<ng-container *ngIf="o.Form[0].Atom=='LVAL'">.{{o.Form[1].Atom}}</ng-container>
-<ng-container *ngIf="o.Form[0].Atom=='GVAL'">,{{o.Form[1].Atom}}</ng-container>
-<ng-container *ngIf="o.Form[0].Atom=='COND'">
+<ng-container *ngIf="o.Form[0]?.Atom=='LVAL'">.{{o.Form[1].Atom}}</ng-container>
+<ng-container *ngIf="o.Form[0]?.Atom=='GVAL'">,{{o.Form[1].Atom}}</ng-container>
+<ng-container *ngIf="o.Form[0]?.Atom=='COND'">
     <div>
         <ng-container *ngFor="let part of o.Form; index as i">
             <ng-container *ngIf="i==0">&lt;COND</ng-container>
@@ -13,7 +13,7 @@
         &gt;
     </div>
 </ng-container>
-<ng-container *ngIf="!(   (o.Form[0].Atom=='LVAL')   ||   (o.Form[0].Atom=='GVAL')   ||   (o.Form[0].Atom=='COND')   )">
+<ng-container *ngIf="!(   (o.Form[0]?.Atom=='LVAL')   ||   (o.Form[0]?.Atom=='GVAL')   ||   (o.Form[0]?.Atom=='COND')   )">
     <ng-container *ngFor="let part of o.Form; index as i">
         <span *ngIf="i==0">&lt;</span><span *ngIf="i!=0">&nbsp;</span><app-zil-object [o]="part"></app-zil-object><span *ngIf="i==o.Form.length-1">&gt;</span>
     </ng-container>    
