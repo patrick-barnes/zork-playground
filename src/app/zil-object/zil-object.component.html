@@ -15,4 +15,4 @@
     )
    -->
 </ng-container>
-<span *ngIf="!(   (o.Atom != undefined)   ||   (o.Form != undefined)   ||   (isArray(o))   )">{{stringify(o)}}</span>
+<span *ngIf="!(   (o.Atom != undefined)   ||   (o.Form != undefined)   ||   (isArray(o))   )">{{normalizeWhitespace(stringify(o))}}</span>

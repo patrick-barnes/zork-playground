@@ -16,4 +16,12 @@ export class ZilObjectComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public normalizeWhitespace(s: string): string {
+    let r = s;
+    r = r.replace(/\\r/gi, "\r");
+    r = r.replace(/\\n/gi, "\n");
+    r = r.replace(/\s+/gi, " ");
+    return r;
+  }
+
 }

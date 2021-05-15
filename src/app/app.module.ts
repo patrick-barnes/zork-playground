@@ -23,7 +23,7 @@ import { RoomExitComponent } from './room-exit/room-exit.component';
 import { LinkableZilAtomComponent } from './linkable-zil-atom/linkable-zil-atom.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  //{ path: 'home', component: HomeComponent },
   { path: 'games', component: AllGamesComponent },
   { path: 'games/:id', component: GameDetailsComponent },
   { path: 'objects', component: AllObjectsComponent },
@@ -34,7 +34,8 @@ const routes: Routes = [
   { path: 'syntaxes/:id', component: SyntaxDetailsComponent },
   { path: 'routines', component: AllRoutinesComponent },
   { path: 'routines/:id', component: RoutineDetailsComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  //{ path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: 'games', pathMatch: 'full' },
 ]
 
 @NgModule({

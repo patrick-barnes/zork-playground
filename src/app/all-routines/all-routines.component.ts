@@ -12,6 +12,13 @@ export class AllRoutinesComponent implements OnInit, GameDataReceiver {
   public isInitialized: boolean = false;
   public allRoutines: any[] = null;
   public allGameData: any = null;
+  // TODO: Move this to the game index data
+  public foundationRoutines = [
+    {"name": "GO", "description": "The routine that starts the game"},
+    {"name": "PARSER", "description": "Get input command, handles syntax errors"},
+    {"name": "PERFORM", "description": "Delegates command to action routines"},
+    {"name": "CLOCKER", "description": "After player turn, lamp burns, sword glows, etc."}
+  ];
   public encodeURIComponent = encodeURIComponent;
   public stringify = JSON.stringify;
 

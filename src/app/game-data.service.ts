@@ -9,7 +9,8 @@ import { GameDataReceiver } from './game-data-receiver';
 })
 export class GameDataService {
 
-  private selectedGameId: string = "zork1";
+  private defaultSelectedGameId: string = "zork1";
+  private cachedSelectedGameId: string = null;
   private indexCached: any = null;
   private allObjectsCached: any[] = null;
   private allRoomsCached: any[] = null;
@@ -25,15 +26,44 @@ export class GameDataService {
 
   public getGameBaseUrl() {
     // Example: "assets/zil-to-json/data/zork1/"
-    return this.getDataBaseUrl() + "/" + this.selectedGameId;
+    return this.getDataBaseUrl() + "/" + this.getSelectedGameId();
   }
 
-  public selectGame(gameId) {
-    this.selectedGameId = gameId;
+  public setSelectedGameId(selectedGameId) {
+    localStorage.setItem('selectedGameId', selectedGameId);
+    this.cachedSelectedGameId = selectedGameId;
+    let dumbReceiver: GameDataReceiver = {
+      receiveGameData: function() {
+        console.log("Finished re-fetching game data for newly selected game.");
+      }
+    };
+    this.clearAllCaches();
+    this.getAllGameData(dumbReceiver);
+  }
+
+  public clearAllCaches() {
+    this.indexCached = null;
+    this.allObjectsCached = null;
+    this.allRoomsCached = null;
+    this.allRoutinesCached = null;
+    this.allSyntaxesCached = null;
   }
 
   public getSelectedGameId() {
-    return this.selectedGameId;
+    if (this.cachedSelectedGameId) {
+      console.log("selectedGameId from cache: " + this.cachedSelectedGameId);
+      return this.cachedSelectedGameId;
+    }
+    let selectedGameId = localStorage.getItem('selectedGameId');
+    if (!selectedGameId) {
+      selectedGameId = this.defaultSelectedGameId;
+      localStorage.setItem('selectedGameId', selectedGameId);
+      console.log("selectedGameId from default: " + selectedGameId);
+    } else {
+      console.log("selectedGameId from localstorage: " + selectedGameId);
+    }
+    this.cachedSelectedGameId = selectedGameId;
+    return selectedGameId;
   }
 
   public getIndex() {

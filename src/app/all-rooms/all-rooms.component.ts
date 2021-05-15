@@ -20,6 +20,16 @@ export class AllRoomsComponent implements OnInit {
     });
   }
 
+  public getRoomCardText(r) {
+    if (r.Properties.FDESC) { return r.Properties.FDESC; }
+    if (r.Properties.LDESC) { return r.Properties.LDESC; }
+    if (r.Properties.ACTION && r.Properties.ACTION[0] && r.Properties.ACTION[0].Atom) {
+      return "(described by " + r.Properties.ACTION[0].Atom + ")";
+    }
+    console.log("WARN: Could not find room description or ACTION for:", r);
+    return "";
+  }
+
   public passesFilters(o) {
     return true;
   }
