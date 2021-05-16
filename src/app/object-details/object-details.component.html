@@ -4,12 +4,12 @@
             <h1 class="color-grey-900 pb-3">{{o.Name}}</h1>
             <table class="table table-hover table-striped table-borderless shadow-lg" style="border-radius:8px; width:auto;">
                 <tbody>
-                    <tr *ngIf="o.Properties['#IN']">
+                    <tr *ngIf="o.Properties['DESC']">
                         <td style="white-space:nowrap;">
-                            <div class="color-grey-900"><b>IN</b></div>
-                            <div class="color-grey-700" style="font-size:smaller">{{getContainerLabel(o.Properties['#IN'])}}</div>
+                            <div class="color-grey-900"><b>DESC</b></div>
+                            <div class="color-grey-700" style="font-size:smaller">Description</div>
                         </td>
-                        <td><div style="color:var(--primary-900)"><b>{{o.Properties['#IN']}}</b></div></td>
+                        <td><div class="game-text">{{o.Properties['DESC']}}</div></td>
                     </tr>
                     <tr *ngIf="o.Properties['FDESC']">
                         <td style="white-space:nowrap;">
@@ -24,13 +24,6 @@
                             <div class="color-grey-700" style="font-size:smaller">Long Description</div>
                         </td>
                         <td><div class="game-text">{{o.Properties['LDESC']}}</div></td>
-                    </tr>
-                    <tr *ngIf="o.Properties['DESC']">
-                        <td style="white-space:nowrap;">
-                            <div class="color-grey-900"><b>DESC</b></div>
-                            <div class="color-grey-700" style="font-size:smaller">Description</div>
-                        </td>
-                        <td><div class="game-text">{{o.Properties['DESC']}}</div></td>
                     </tr>
                     <tr *ngIf="o.Properties['TEXT']">
                         <td style="white-space:nowrap;">
@@ -77,7 +70,11 @@
                             <div class="color-grey-900"><b>ACTION</b></div>
                             <div class="color-grey-700" style="font-size:smaller">Action Function</div>
                         </td>
-                        <td style="color:var(--primary-900)"><b>{{o.Properties['ACTION'][0].Atom}}</b></td>
+                        <td style="color:var(--primary-900)">
+                            <a [href]="'routines/'+o.Properties['ACTION'][0].Atom" class="text-reset text-decoration-none">
+                                <b>{{o.Properties['ACTION'][0].Atom}}</b>
+                            </a>
+                        </td>
                     </tr>
                     <ng-container *ngFor="let p of o.Properties | keyvalue">
                         <tr *ngIf="!isKnownProperty(p.key)">
@@ -87,6 +84,21 @@
                             <td style="color:var(--primary-900)">{{stringify(p.value[0])}}</td>
                         </tr>
                     </ng-container>
+                    <tr *ngIf="o.Properties['#IN']">
+                        <td style="white-space:nowrap;">
+                            <div class="color-grey-900"><b>IN</b></div>
+                            <div class="color-grey-700" style="font-size:smaller">{{getContainerLabel(o.Properties['#IN'])}}</div>
+                        </td>
+                        <td>
+                            <a *ngIf="parentObject != null" [href]="'objects/'+o.Properties['#IN']" class="text-reset text-decoration-none">
+                                <div style="color:var(--primary-900)"><b>{{o.Properties['#IN']}}</b></div>
+                                <div class="game-text">{{parentObject.Properties['DESC']}}</div>
+                            </a>
+                            <a *ngIf="parentObject == null" [href]="'rooms/'+o.Properties['#IN']" class="text-reset text-decoration-none">
+                                <div style="color:var(--primary-900)"><b>{{o.Properties['#IN']}}</b></div>
+                            </a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <ng-container *ngIf="contains.length != 0">
@@ -95,7 +107,11 @@
                 <table class="table table-striped table-hover mt-3" style="width:auto">
                     <tbody>
                         <tr *ngFor="let obj of contains">
-                            <td style="color:var(--primary-900)"><b>{{obj.Name}}</b></td>
+                            <td style="color:var(--primary-900)">
+                                <a [href]="'objects/'+obj.Name" class="text-reset text-decoration-none">
+                                    <b>{{obj.Name}}</b>
+                                </a>
+                            </td>
                             <td><span class="game-text">{{obj.Properties["DESC"]}}</span></td>
                         </tr>
                     </tbody>

@@ -4,12 +4,12 @@
             <h1 class="color-primary-900 pb-3">{{o.Name}}</h1>
             <table class="table table-hover table-striped table-borderless shadow-lg" style="border-radius:8px; width:auto;">
                 <tbody>
-                    <tr *ngIf="o.Properties['#IN']">
+                    <tr *ngIf="o.Properties['DESC']">
                         <td style="white-space:nowrap;">
-                            <div class="color-grey-900"><b>IN</b></div>
-                            <div class="color-grey-700" style="font-size:smaller">{{getContainerLabel(o.Properties['#IN'])}}</div>
+                            <div class="color-grey-900"><b>DESC</b></div>
+                            <div class="color-grey-700" style="font-size:smaller">Room Title</div>
                         </td>
-                        <td><div style="color:var(--primary-900)"><b>{{o.Properties['#IN']}}</b></div></td>
+                        <td><div class="game-text">{{o.Properties['DESC']}}</div></td>
                     </tr>
                     <tr *ngIf="o.Properties['FDESC']">
                         <td style="white-space:nowrap;">
@@ -25,59 +25,16 @@
                         </td>
                         <td><div class="game-text">{{o.Properties['LDESC']}}</div></td>
                     </tr>
-                    <tr *ngIf="o.Properties['DESC']">
-                        <td style="white-space:nowrap;">
-                            <div class="color-grey-900"><b>DESC</b></div>
-                            <div class="color-grey-700" style="font-size:smaller">Room Title</div>
-                        </td>
-                        <td><div class="game-text">{{o.Properties['DESC']}}</div></td>
-                    </tr>
-                    <!--
-                    <tr *ngIf="o.Properties['GLOBAL']">
-                        <td style="white-space:nowrap;">
-                            <div class="color-grey-900"><b>GLOBAL</b></div>
-                            <div class="color-grey-700" style="font-size:smaller">Local-global objects</div>
-                        </td>
-                        <td><div *ngFor="let g of o.Properties['GLOBAL']"><b>{{g.Atom}}</b></div></td>
-                    </tr>
-                    <tr *ngIf="o.Properties['TEXT']">
-                        <td style="white-space:nowrap;">
-                            <div class="color-grey-900"><b>TEXT</b></div>
-                            <div class="color-grey-700" style="font-size:smaller">Text when read</div>
-                        </td>
-                        <td><div class="game-text">{{o.Properties['TEXT'][0]}}</div></td>
-                    </tr>
-                    <tr *ngIf="o.Properties['ADJECTIVE']">
-                        <td style="white-space:nowrap;">
-                            <div class="color-grey-900"><b>ADJECTIVE</b></div>
-                            <div class="color-grey-700" style="font-size:smaller">Adjectives</div>
-                        </td>
-                        <td style="color:var(--green-600); font-weight:bold">
-                            <span *ngFor="let adj of o.Properties['ADJECTIVE']; index as i">
-                                <span *ngIf="i!=0">&nbsp;</span>
-                                <span>{{adj.toLowerCase()}}</span>
-                            </span>
-                        </td>
-                    </tr>
-                    <tr *ngIf="o.Properties['SYNONYM']">
-                        <td style="white-space:nowrap;">
-                            <div class="color-grey-900"><b>SYNONYM</b></div>
-                            <div class="color-grey-700" style="font-size:smaller">Synonyms</div>
-                        </td>
-                        <td style="color:var(--green-600); font-weight:bold">
-                            <span *ngFor="let syn of o.Properties['SYNONYM']; index as i">
-                                <span *ngIf="i!=0">&nbsp;</span>
-                                <span>{{syn.toLowerCase()}}</span>
-                            </span>
-                        </td>
-                    </tr>
-                    -->
                     <tr *ngIf="o.Properties['ACTION']">
                         <td style="white-space:nowrap;">
                             <div class="color-grey-900"><b>ACTION</b></div>
                             <div class="color-grey-700" style="font-size:smaller">Action Function</div>
                         </td>
-                        <td style="color:var(--primary-900)"><b>{{o.Properties['ACTION'][0].Atom}}</b></td>
+                        <td style="color:var(--primary-900)">
+                            <a [href]="'routines/'+o.Properties['ACTION'][0].Atom" class="text-reset text-decoration-none">
+                                <b>{{o.Properties['ACTION'][0].Atom}}</b>
+                            </a>
+                        </td>
                     </tr>
                     <tr *ngIf="o.Properties['FLAGS']">
                         <td style="white-space:nowrap;">
@@ -96,10 +53,19 @@
                             <td style="color:var(--primary-900)">{{stringify(p.value[0])}}</td>
                         </tr>
                     </ng-container>
+                    <!--
+                    <tr *ngIf="o.Properties['#IN']">
+                        <td style="white-space:nowrap;">
+                            <div class="color-grey-900"><b>IN</b></div>
+                            <div class="color-grey-700" style="font-size:smaller">{{getContainerLabel(o.Properties['#IN'])}}</div>
+                        </td>
+                        <td><div style="color:var(--primary-900)"><b>{{o.Properties['#IN']}}</b></div></td>
+                    </tr>
+                    -->
                 </tbody>
             </table>
             <ng-container *ngIf="contains.length != 0">
-                <h2 class="mt-4">Contains</h2>
+                <h2 class="mt-4">Objects in Room</h2>
                 <table class="table table-striped table-hover mt-3" style="width:auto">
                     <tbody>
                         <tr *ngFor="let obj of contains">
@@ -110,14 +76,20 @@
                 </table>
             </ng-container>
             <ng-container *ngIf="o.Properties['GLOBAL']">
-                <h2 class="mt-4">Local Globals</h2>
+                <h2 class="mt-4">Local-Globals in Room</h2>
                 <table class="table table-striped table-hover mt-3" style="width:auto">
                     <tbody>
+                        <!--
                         <tr *ngFor="let g of o.Properties['GLOBAL']">
                             <td style="color:var(--primary-900)"><b>{{g.Atom}}</b></td>
                             <td><span>Local-Global</span></td>
                         </tr>
-                    </tbody>
+                        -->
+                        <tr *ngFor="let g of localGlobals">
+                            <td style="color:var(--primary-900)"><b>{{g.Name}}</b></td>
+                            <td><span class="game-text">{{g.Properties["DESC"]}}</span></td>
+                        </tr>
+                </tbody>
                 </table>
             </ng-container>
 
@@ -134,15 +106,15 @@
                         <app-room-exit [room]="o" [dir]="'NE'"></app-room-exit>
                     </div>
                 </div>
-                <div class="row mb-3" style="max-width:600px;" *ngIf="o.Exits.UP || o.Exits.ENTER || o.Exits.EXIT">
+                <div class="row mb-3" style="max-width:600px;" *ngIf="o.Exits.LAUNCH || o.Exits.UP || o.Exits.IN">
                     <div class="col " style="min-height:100px;">
-                        <app-room-exit [room]="o" [dir]="'ENTER'"></app-room-exit>
+                        <app-room-exit [room]="o" [dir]="'LAUNCH'"></app-room-exit>
                     </div>
                     <div class="col " style="min-height:100px;">
                         <app-room-exit [room]="o" [dir]="'UP'"></app-room-exit>
                     </div>
                     <div class="col " style="min-height:100px;">
-                        <app-room-exit [room]="o" [dir]="'EXIT'"></app-room-exit>
+                        <app-room-exit [room]="o" [dir]="'IN'"></app-room-exit>
                     </div>
                 </div>
                 <div class="row mb-3" style="max-width:600px;">
@@ -156,9 +128,9 @@
                         <app-room-exit [room]="o" [dir]="'EAST'"></app-room-exit>
                     </div>
                 </div>
-                <div class="row mb-3" style="max-width:600px;" *ngIf="o.Exits.DOWN || o.Exits.LAUNCH || o.Exits.LAND">
+                <div class="row mb-3" style="max-width:600px;" *ngIf="o.Exits.OUT || o.Exits.DOWN || o.Exits.LAND">
                     <div class="col " style="min-height:100px;">
-                        <app-room-exit [room]="o" [dir]="'LAUNCH'"></app-room-exit>
+                        <app-room-exit [room]="o" [dir]="'OUT'"></app-room-exit>
                     </div>
                     <div class="col " style="min-height:100px;">
                         <app-room-exit [room]="o" [dir]="'DOWN'"></app-room-exit>

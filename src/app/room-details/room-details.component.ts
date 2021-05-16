@@ -13,6 +13,7 @@ export class RoomDetailsComponent implements OnInit {
   public id: string = null;
   public o: any = null;
   public contains: any[] = [];
+  public localGlobals: any[] = [];
   public parentObject: any = null;
   public isInitialized: boolean = false;
   public knownProperties: string[] = [
@@ -54,6 +55,13 @@ export class RoomDetailsComponent implements OnInit {
         console.log("Error: object not found.");
       }
       console.log("Room = this.o:", this.o);
+      let localGlobalNames = [];
+      if (this.o.Properties['GLOBAL']) {
+        for (let g of this.o.Properties['GLOBAL']) {
+          localGlobalNames.push(g.Atom);
+        }
+      }
+      console.log("localGlobalNames:", localGlobalNames);
       // Now look at all objects in the game...
       this.gameDataService.getAllObjects().subscribe((allObjects) => {
         console.log("allObjects:", allObjects);
@@ -66,13 +74,11 @@ export class RoomDetailsComponent implements OnInit {
           if (this.o.Properties["#IN"] == obj.Name) {
             this.parentObject = obj;
           }
+          if (localGlobalNames.includes(obj.Name)) {
+            this.localGlobals.push(obj);
+          }
         }
-        if (!this.o) {
-          console.log("Error: object not found.");
-        } else if (!this.parentObject) {
-          console.log("parentObject not found, probably a room.");
-        }
-        console.log("this.o:", this.o);
+        console.log("localGlobals:", this.localGlobals);
         this.isInitialized = true;
       });
   
